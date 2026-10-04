@@ -15,6 +15,7 @@ ARG GOARCH
 ENV GOARCH=${GOARCH}
 RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build make prometheus-config-reloader
 
+# Alloy-only runtime: no shell/exec probes. See README.md in this directory.
 FROM --platform=${OS}/${ARCH} gcr.io/distroless/static-debian13:nonroot@sha256:e2e927ec666bae08560abb3c55d0659eceabb657f56b6782ab500a9fc7f555e3
 WORKDIR /
 
