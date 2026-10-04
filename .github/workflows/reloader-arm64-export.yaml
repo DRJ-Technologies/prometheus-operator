@@ -51,9 +51,10 @@ jobs:
           mkdir -p "$out"
           builder_version="$(sed -n 's/^ARG GOLANG_BUILDER=//p' cmd/prometheus-config-reloader/Dockerfile)"
           test -n "$builder_version"
-          # No outer --platform: the AMD64 builder cross-compiles GOARCH, and
-          # the unmodified final FROM selects linux/arm64 without runtime RUN.
+          # Export an ARM64 target while BUILDPLATFORM keeps the builder native.
+          # The native Make recipe cross-compiles GOARCH without runtime RUN.
           docker buildx build \
+            --platform linux/arm64 \
             --build-arg OS=linux --build-arg GOARCH=arm64 \
             --build-context "quay.io/prometheus/golang-builder:${builder_version}-base=docker-image://${GOLANG_BUILDER_IMAGE}" \
             --file cmd/prometheus-config-reloader/Dockerfile \
