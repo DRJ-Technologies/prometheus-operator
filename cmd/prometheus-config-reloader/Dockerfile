@@ -15,10 +15,11 @@ ARG GOARCH
 ENV GOARCH=${GOARCH}
 RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build make prometheus-config-reloader
 
-FROM quay.io/prometheus/busybox-${OS}-${ARCH}:latest
+FROM --platform=${OS}/${ARCH} gcr.io/distroless/static-debian13:nonroot@sha256:e2e927ec666bae08560abb3c55d0659eceabb657f56b6782ab500a9fc7f555e3
+WORKDIR /
 
 COPY --from=builder workspace/prometheus-config-reloader /bin/prometheus-config-reloader
 
-USER nobody
+USER 65534:65534
 
 ENTRYPOINT ["/bin/prometheus-config-reloader"]
