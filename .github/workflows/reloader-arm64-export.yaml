@@ -14,8 +14,7 @@ permissions:
 jobs:
   export:
     if: >-
-      (github.repository == 'DRJ-Technologies/k8s' ||
-       github.repository == 'DRJ-Technologies/build-platform') &&
+      github.repository == 'DRJ-Technologies/build-platform' &&
       github.event.repository.private == true &&
       github.event_name == 'workflow_dispatch' &&
       github.ref == 'refs/heads/main'
