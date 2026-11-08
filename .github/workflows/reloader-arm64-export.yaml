@@ -24,7 +24,8 @@ jobs:
     env:
       # Native Dockerfile appends -base to GOLANG_BUILDER; bind that image
       # context without replacing its version argument or Make build recipe.
-      GOLANG_BUILDER_IMAGE: quay.io/prometheus/golang-builder@sha256:fc013154ceddeaab02e5bb96e9f6549d77230851e55b3cb90cbdaba9d5dc5431
+      # Official 1.26-base builder with Go 1.26.10; the old digest is unavailable.
+      GOLANG_BUILDER_IMAGE: quay.io/prometheus/golang-builder@sha256:c629252e61d6759a48cee8487eb7e539f580bbd9cd29ce318d75b3fef213a7ac
       BUILDX_METADATA_PROVENANCE: max
       SOURCE_SHA: ${{ inputs.source_sha }}
     steps:
